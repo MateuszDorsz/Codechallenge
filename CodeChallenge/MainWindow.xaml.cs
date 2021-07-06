@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CodeChallenge.ViewModels;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CodeChallenge
 {
@@ -23,6 +11,30 @@ namespace CodeChallenge
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
+
+            Loaded += delegate
+            {
+                this.Content.Height = ViewModel.DrawingGridHeight;
+                this.Content.Width = ViewModel.DrawingGridWidth;
+                SizeChanged += MainWindow_SizeChanged;
+            };
+            Unloaded += delegate
+            {
+                SizeChanged -= MainWindow_SizeChanged;
+            };
+        }
+
+        public MainWindowViewModel ViewModel
+        {
+            get { return (MainWindowViewModel)DataContext; }
+        }
+
+
+        void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ViewModel.DrawingGridWidth = this.Content.Width;
+            ViewModel.DrawingGridHeight = this.Content.Height;
         }
     }
 }

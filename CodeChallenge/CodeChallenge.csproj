@@ -6,4 +6,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="DrawingProperties\CircleDrawingProperties.cs~RF29472dc1.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CodeChallenge.Controls\CodeChallenge.Controls.csproj" />
+    <ProjectReference Include="..\CodeChallenge.Model\CodeChallenge.Model.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -3,10 +3,47 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CodeChallenge"
+        xmlns:viewmodels="clr-namespace:CodeChallenge.ViewModels" 
+        xmlns:dynamiccontrols="clr-namespace:CodeChallenge.DynamicControls" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
+        <TextBlock Grid.Row="0" Grid.Column="0" Height="40" VerticalAlignment="Center" Width="Auto" Margin="10"
+                   Text="{Binding InputFilePath, Mode=OneWay}" IsEnabled="False">
+        </TextBlock>
+        <Button Grid.Row="0" Grid.Column="1" Height="40" VerticalAlignment="Center" Width="Auto" Margin="10 10 10 10"
+                Command="{Binding OpenFileDialogCommand}">
+            <Label>Select input file</Label>
+        </Button>
+
+        <Grid Name="Content" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Height="Auto" Width="Auto">
+            <ItemsControl ItemsSource="{Binding DynamicControls, Mode=TwoWay}" Width="Auto" Height="Auto">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid></Grid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <dynamiccontrols:DynamicControlBase DrawingLogic="{Binding DrawingLogic}" 
+                                                            DrawingProperties="{Binding DrawingProperties}"
+                                                            Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
+                                                            Width="Auto" Height="Auto"
+                                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        </dynamiccontrols:DynamicControlBase>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
     </Grid>
 </Window>
